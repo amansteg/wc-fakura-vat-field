@@ -21,7 +21,12 @@ function add_nip_number_checkout_field($fields) {
         'placeholder' => _x('Numer NIP', 'placeholder', 'woocommerce'),
         'required'    => false,
         'class'       => array('form-row-wide'),
-        'clear'       => true
+        'clear'       => true,
+		'maxlength'   => 11,
+        'custom_attributes' => array(
+            'pattern'   => '^[a-zA-Z0-9]*$',  // Only alphanumeric characters
+            'title'     => 'Only alphanumeric characters are allowed.'
+        )
     );
 
     return $fields;
@@ -45,6 +50,15 @@ function add_nip_number_to_api_response($response, $order, $request) {
     $response->data['nip_number'] = $nip_number;
     return $response;
 }
+
+//RegEx for NIP Number
+add_action('woocommerce_checkout_process', 'validate_faktura_vat_field');
+function validate_faktura_vat_field() {
+    if (isset($_POST['nip_number']) && !preg_match('/^[a-zA-Z0-9]{0,11}$/', $_POST['nip_number'])) {
+        wc_add_notice(__('Wprowadź prawidłowy numer NIP.', 'woocommerce'), 'error');
+    }
+}
+
 
 add_filter('woocommerce_order_formatted_billing_address', 'add_nip_number_to_admin_billing_address', 10, 2);
 function add_nip_number_to_admin_billing_address($address, $order) {
