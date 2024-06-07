@@ -3,7 +3,7 @@
  * Plugin Name: WooCommerce Custom Fakura VAT
  * Description: Adds a Faktura VAT ID (NIP Number) field to the WooCommerce checkout page, saves it, and includes it in the REST API responses.
  * Version:     1.0
- * Author:      Aman Joshi
+ * Author:      Stegback
  * Text Domain: woocommerce-custom-fakura-vat
  * WC requires at least: 3.0
  * WC tested up to: 5.9
